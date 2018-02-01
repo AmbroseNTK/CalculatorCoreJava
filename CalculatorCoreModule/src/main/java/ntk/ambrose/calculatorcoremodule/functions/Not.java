@@ -7,33 +7,31 @@ import ntk.ambrose.calculatorcoremodule.ExpressionComponent;
 import ntk.ambrose.calculatorcoremodule.MessageType;
 
 
-public class Less extends ExpressionComponent {
-    public Less(){
-        componentType= ExprComponentType.Function;
-        priority=1;
+public class Not extends ExpressionComponent {
+    public Not() {
+        componentType = ExprComponentType.Function;
+        priority = 1;
     }
     @Override
     public void parse(Expression expression) {
-        parseFunction(expression,new Less());
+        parseFunction(expression,new Not());
     }
 
     @Override
     public ExpressionComponent process() {
-        if (args.size() == 2) {
-            ExpressionComponent paraA = args.pop();
-            ExpressionComponent paraB = args.pop();
-            if (paraA.getComponentType() == ExprComponentType.Number && paraB.getComponentType() == ExprComponentType.Number) {
-                if ((Double) paraA.getValue()<(Double) paraB.getValue())
-                    return new True();
-                else
+        if(args.size()==1){
+            if(args.peek().getComponentType()==ExprComponentType.Boolean){
+                if((Boolean)args.pop().getValue())
                     return new False();
-
-            } else {
-                ErrorHandle.getInstance().setErrorFlag(true);
-                ErrorHandle.getInstance().setMessage(MessageType.Error, getClass().getName()+": "+locale.incorrectArgument());
+                else
+                    return new True();
             }
-
-        } else {
+            else{
+                ErrorHandle.getInstance().setErrorFlag(true);
+                ErrorHandle.getInstance().setMessage(MessageType.Error, getClass().getName()+": "+locale.incorrectArgumentType());
+            }
+        }
+        else{
             ErrorHandle.getInstance().setErrorFlag(true);
             ErrorHandle.getInstance().setMessage(MessageType.Error, getClass().getName()+": "+locale.incorrectArgumentList());
         }

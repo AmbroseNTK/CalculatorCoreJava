@@ -10,4 +10,5 @@ public enum ExprComponentType {
     WallO,
     PatheL,
     PatheR,
+    Null,
 }

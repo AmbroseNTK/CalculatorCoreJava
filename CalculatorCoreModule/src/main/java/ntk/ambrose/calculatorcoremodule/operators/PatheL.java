@@ -22,9 +22,8 @@ public class PatheL extends ExpressionComponent {
                 }
             }
             if(!isInStr) {
-                if (chExpr[i] == '(') {
+                if (chExpr[i] == '('||chExpr[i]=='{') {
                     expression.getExpr().put(i, new PatheL());
-                    ErrorHandle.getInstance().setMessage(MessageType.Info, "PatheL operator");
                 }
             }
         }

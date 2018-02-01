@@ -11,7 +11,6 @@ public class Equal extends ExpressionComponent {
     public Equal() {
         componentType = ExprComponentType.Function;
         priority=1;
-        identify = "equal";
     }
 
     @Override
@@ -35,12 +34,12 @@ public class Equal extends ExpressionComponent {
                     return new True();
             } else {
                 ErrorHandle.getInstance().setErrorFlag(true);
-                ErrorHandle.getInstance().setMessage(MessageType.Error, "Equal: Incorrect arguments");
+                ErrorHandle.getInstance().setMessage(MessageType.Error, getClass().getName()+": "+locale.incorrectArgumentType());
             }
 
         } else {
             ErrorHandle.getInstance().setErrorFlag(true);
-            ErrorHandle.getInstance().setMessage(MessageType.Error, "Equal: Too many arguments");
+            ErrorHandle.getInstance().setMessage(MessageType.Error, getClass().getName()+": "+locale.incorrectArgumentList());
         }
         return new False();
     }

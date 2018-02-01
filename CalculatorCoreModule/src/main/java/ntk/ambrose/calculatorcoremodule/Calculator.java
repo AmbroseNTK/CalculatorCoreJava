@@ -1,6 +1,7 @@
 package ntk.ambrose.calculatorcoremodule;
 
 import java.util.ArrayList;
+import java.util.TreeMap;
 
 import ntk.ambrose.calculatorcoremodule.operands.*;
 import ntk.ambrose.calculatorcoremodule.operands.Number;
@@ -10,24 +11,21 @@ import ntk.ambrose.calculatorcoremodule.functions.*;
 public class Calculator {
     private String rawExpression;
     private String result;
-    private Expression expression;
+    private TreeMap<Integer,Expression> expressions;
+    private int numOfExpr;
     private ArrayList<ExpressionComponent> parser;
-    public String getRawExpression() {
-        return rawExpression;
-    }
 
-    public void setRawExpression(String rawExpression) {
-        this.rawExpression = rawExpression;
-        expression = new Expression(rawExpression);
-    }
-
-    public String getResult() {
-        return result;
-    }
     public Calculator(){
         init();
     }
+    public void extension(ArrayList<ExpressionComponent> parser){
+
+    }
     private void init(){
+        MemoryZone.getInstance().clearData();
+        ExpressionComponent.setLocale(new LocaleEn());
+        numOfExpr=0;
+        expressions=new TreeMap<>();
         parser = new ArrayList<>();
         parser.add(new Number());
         parser.add(new Str());
@@ -35,7 +33,6 @@ public class Calculator {
         parser.add(new Subtract());
         parser.add(new Multiple());
         parser.add(new Division());
-
         parser.add(new PatheL());
         parser.add(new PatheR());
         parser.add(new Sum());
@@ -48,13 +45,38 @@ public class Calculator {
         parser.add(new Equal());
         parser.add(new Greater());
         parser.add(new Less());
-    }
-    public void calculate(){
-        for(ExpressionComponent component: parser){
-            component.parse(expression);
-        }
-        expression.toPostfix();
-        ErrorHandle.getInstance().setMessage(MessageType.Info,"Result = "+expression.calculate().toString());
+        parser.add(new Not());
+
+        parser.add(new Average());
+        parser.add(new CreateVar());
+        parser.add(new GetVar());
+        parser.add(new SetVar());
+        parser.add(new Body());
+        parser.add(new ClearMem());
+        extension(parser);
 
     }
+    public void addExpression(int id, String rawExpression){
+        expressions.put(id,new Expression(rawExpression));
+
+    }
+    public void addExpression(String rawExpression){
+        addExpression(numOfExpr,rawExpression);
+        numOfExpr++;
+    }
+    public ExpressionComponent calculate() {
+        ExpressionComponent result = null;
+        for(Expression expression: expressions.values()) {
+
+            for (ExpressionComponent component : parser) {
+                component.parse(expression);
+            }
+            expression.toPostfix();
+            result = expression.calculate();
+            ErrorHandle.getInstance().setMessage(MessageType.Info, "Result = " + (result == null ? "Unknow" : result.toString()));
+
+        }
+        return result;
+    }
+
 }

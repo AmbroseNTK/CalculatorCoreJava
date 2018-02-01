@@ -70,11 +70,22 @@ public class Expression {
                 ExpressionComponent top = null;
                 if (!operators.isEmpty())
                     top = operators.peek();
-                while (top != null && top.componentType != ExprComponentType.PatheL) {
-                    postfix.add(operators.pop());
-                    top = operators.peek();
+                while (top != null) {
+                    if(top.componentType != ExprComponentType.PatheL) {
+                        postfix.add(operators.pop());
+                        top = operators.peek();
+                    }
+                    else{
+                        operators.pop();
+                        if(!operators.isEmpty()) {
+                            if (operators.peek().componentType == ExprComponentType.Function) {
+                                postfix.add(operators.pop());
+                            }
+                        }
+                        break;
+                    }
                 }
-                operators.pop();
+
             }
             else if(component.componentType==ExprComponentType.Function){
                 ExpressionComponent top =null;
@@ -96,15 +107,18 @@ public class Expression {
         ExpressionComponent next=null;
         for(int i=0;i<postfix.size()&&!ErrorHandle.getInstance().getErrorFlag();i++) {
             next = postfix.get(i);
-            if (next.componentType == ExprComponentType.Number || next.componentType == ExprComponentType.String || next.componentType == ExprComponentType.Boolean || next.componentType == ExprComponentType.WallO) {
-                result.push(next);
+            if (next.componentType == ExprComponentType.Number || next.componentType == ExprComponentType.String || next.componentType == ExprComponentType.Boolean || next.componentType == ExprComponentType.WallO||next.componentType==ExprComponentType.Null) {
+                if(next.componentType!=ExprComponentType.Null) {
+                    result.push(next);
+                }
+                else continue;
             } else if (next.componentType == ExprComponentType.Operator) {
                 if (next.identify.equals("add_operator") || next.identify.equals("subtract_operator")) {
                     if (!result.isEmpty()) {
                         next.args.push(result.pop());
                     } else {
                         ErrorHandle.getInstance().setErrorFlag(true);
-                        ErrorHandle.getInstance().setMessage(MessageType.Error, "Missing some operand");
+                        ErrorHandle.getInstance().setMessage(MessageType.Error, ExpressionComponent.locale.missingOperand());
                     }
                     if (!result.isEmpty()) {
                         next.args.push(result.pop());
@@ -117,7 +131,7 @@ public class Expression {
                         next.args.push(result.pop());
                     } else {
                         ErrorHandle.getInstance().setErrorFlag(true);
-                        ErrorHandle.getInstance().setMessage(MessageType.Error, "Missing some operand");
+                        ErrorHandle.getInstance().setMessage(MessageType.Error, ExpressionComponent.locale.missingOperand());
                     }
                 }
                 result.push(next.process());
@@ -127,7 +141,7 @@ public class Expression {
                     funcArg = result.peek();
                 } else {
                     ErrorHandle.getInstance().setErrorFlag(true);
-                    ErrorHandle.getInstance().setMessage(MessageType.Error, "Missing some argument");
+                    ErrorHandle.getInstance().setMessage(MessageType.Error, ExpressionComponent.locale.incorrectArgumentList());
                 }
                 while (funcArg.componentType != ExprComponentType.WallO) {
                     next.args.push(result.pop());
@@ -136,7 +150,7 @@ public class Expression {
                     }
                     else{
                         ErrorHandle.getInstance().setErrorFlag(true);
-                        ErrorHandle.getInstance().setMessage(MessageType.Error, "Missing some argument");
+                        ErrorHandle.getInstance().setMessage(MessageType.Error, ExpressionComponent.locale.incorrectArgumentList());
                         break;
                     }
                 }
@@ -150,7 +164,7 @@ public class Expression {
         }
         else{
             ErrorHandle.getInstance().setErrorFlag(true);
-            ErrorHandle.getInstance().setMessage(MessageType.Error,"Expression cannot calculate completly");
+            ErrorHandle.getInstance().setMessage(MessageType.Error,ExpressionComponent.locale.failExpression());
             return null;
         }
 

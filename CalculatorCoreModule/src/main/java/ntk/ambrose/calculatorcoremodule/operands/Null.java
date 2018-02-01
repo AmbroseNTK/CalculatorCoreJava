@@ -1,23 +1,22 @@
-package ntk.ambrose.calculatorcoremodule.functions;
+package ntk.ambrose.calculatorcoremodule.operands;
+
 
 import ntk.ambrose.calculatorcoremodule.ExprComponentType;
 import ntk.ambrose.calculatorcoremodule.Expression;
 import ntk.ambrose.calculatorcoremodule.ExpressionComponent;
 
-
-public class False extends ExpressionComponent {
-    public False(){
-        componentType= ExprComponentType.Boolean;
-        value=false;
+public class Null extends ExpressionComponent {
+    public Null(){
+        componentType= ExprComponentType.Null;
         priority=0;
     }
     @Override
     public void parse(Expression expression) {
-        parseFunction(expression,new False());
+        parseFunction(expression,new Null());
     }
 
     @Override
     public ExpressionComponent process() {
-        return new False();
+        return new Null();
     }
 }

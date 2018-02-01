@@ -5,6 +5,7 @@ import ntk.ambrose.calculatorcoremodule.ExprComponentType;
 import ntk.ambrose.calculatorcoremodule.Expression;
 import ntk.ambrose.calculatorcoremodule.ExpressionComponent;
 import ntk.ambrose.calculatorcoremodule.MessageType;
+import ntk.ambrose.calculatorcoremodule.operands.Null;
 import ntk.ambrose.calculatorcoremodule.operands.Number;
 
 
@@ -35,7 +36,7 @@ public class Division extends ExpressionComponent {
 
     @Override
     public ExpressionComponent process() {
-        ExpressionComponent result=null;
+        ExpressionComponent result=new Null();
         if(args.size()>=2) {
             ExpressionComponent paraA = args.pop();
             ExpressionComponent paraB = args.pop();
@@ -44,16 +45,16 @@ public class Division extends ExpressionComponent {
                     result = new Number((Double) paraA.getValue() / (Double) paraB.getValue());
                 } else {
                     ErrorHandle.getInstance().setErrorFlag(true);
-                    ErrorHandle.getInstance().setMessage(MessageType.Error, "Division by zero");
+                    ErrorHandle.getInstance().setMessage(MessageType.Error, locale.operandDivisionByZero());
                 }
             } else {
                 ErrorHandle.getInstance().setErrorFlag(true);
-                ErrorHandle.getInstance().setMessage(MessageType.Error, "Args have incorrect type");
+                ErrorHandle.getInstance().setMessage(MessageType.Error, locale.incorrectArgument());
             }
         }
         else{
             ErrorHandle.getInstance().setErrorFlag(true);
-            ErrorHandle.getInstance().setMessage(MessageType.Error, "Missing some operand");
+            ErrorHandle.getInstance().setMessage(MessageType.Error, locale.missingOperand());
         }
         return result;
     }

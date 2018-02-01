@@ -12,7 +12,6 @@ public class PI extends ExpressionComponent {
     public PI(){
         componentType= ExprComponentType.Function;
         priority=0;
-        identify="PI";
     }
     @Override
     public void parse(Expression expression) {
@@ -25,7 +24,7 @@ public class PI extends ExpressionComponent {
             return new Number(3.14159265359);
         else{
             ErrorHandle.getInstance().setErrorFlag(true);
-            ErrorHandle.getInstance().setMessage(MessageType.Error, "PI: Too many arguments");
+            ErrorHandle.getInstance().setMessage(MessageType.Error, getClass().getName()+": "+locale.incorrectArgumentList());
         }
         return new Number(0);
     }

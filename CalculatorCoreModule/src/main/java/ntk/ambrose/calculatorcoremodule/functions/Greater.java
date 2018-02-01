@@ -11,7 +11,6 @@ public class Greater extends ExpressionComponent {
     public Greater(){
         componentType= ExprComponentType.Function;
         priority=1;
-        identify="greater";
     }
     @Override
     public void parse(Expression expression) {
@@ -31,12 +30,12 @@ public class Greater extends ExpressionComponent {
 
             } else {
                 ErrorHandle.getInstance().setErrorFlag(true);
-                ErrorHandle.getInstance().setMessage(MessageType.Error, "Greater: Incorrect arguments");
+                ErrorHandle.getInstance().setMessage(MessageType.Error,getClass().getName()+": "+locale.incorrectArgumentType());
             }
 
         } else {
             ErrorHandle.getInstance().setErrorFlag(true);
-            ErrorHandle.getInstance().setMessage(MessageType.Error, "Greater: Too many arguments");
+            ErrorHandle.getInstance().setMessage(MessageType.Error, getClass().getName()+": "+locale.incorrectArgumentList());
         }
         return new False();
     }

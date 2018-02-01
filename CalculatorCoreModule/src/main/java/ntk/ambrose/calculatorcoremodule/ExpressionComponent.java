@@ -11,6 +11,10 @@ public abstract class ExpressionComponent {
     protected int priority;
     protected Stack<ExpressionComponent> args;
     protected String identify;
+    protected static Locale locale;
+    public static void setLocale(Locale loc){
+        locale=loc;
+    }
     public ExpressionComponent() {
         componentType = ExprComponentType.Unknown;
         args=new Stack<>();
@@ -20,7 +24,8 @@ public abstract class ExpressionComponent {
 
     @Override
     public String toString() {
-        return value.toString();
+
+        return value==null?"Null":value.toString();
     }
 
     public abstract void parse(Expression expression);
@@ -37,6 +42,7 @@ public abstract class ExpressionComponent {
         this.args = args;
     }
     public void parseFunction(Expression expression,ExpressionComponent component) {
+        identify = locale.getIdentify(getClass().getName());
         boolean isInStr = false;
         int start = 0;
         char[] chExpr = expression.getRawExpression().toCharArray();

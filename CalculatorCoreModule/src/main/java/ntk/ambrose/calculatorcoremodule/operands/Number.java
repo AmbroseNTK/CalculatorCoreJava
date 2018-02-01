@@ -19,9 +19,8 @@ public class Number extends ExpressionComponent {
         componentType = ExprComponentType.Number;
         try {
             value = new Double(strNum);
-            ErrorHandle.getInstance().setMessage(MessageType.Info,"Number: "+value.toString());
         } catch (Exception e) {
-            ErrorHandle.getInstance().setMessage(MessageType.Error, "Cannot parse " + strNum + " to number");
+            ErrorHandle.getInstance().setMessage(MessageType.Error, getClass().getName()+": "+locale.operandNumberError()+": "+strNum);
         }
     }
 

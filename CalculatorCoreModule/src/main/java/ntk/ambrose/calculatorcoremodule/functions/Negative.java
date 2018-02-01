@@ -11,7 +11,6 @@ public class Negative extends ExpressionComponent {
     public Negative(){
         componentType= ExprComponentType.Function;
         priority=0;
-        identify="neg";
     }
     @Override
     public void parse(Expression expression) {
@@ -26,7 +25,7 @@ public class Negative extends ExpressionComponent {
         }
         else{
             ErrorHandle.getInstance().setErrorFlag(true);
-            ErrorHandle.getInstance().setMessage(MessageType.Error, "Neg: Too many arguments");
+            ErrorHandle.getInstance().setMessage(MessageType.Error, getClass().getName()+": "+locale.incorrectArgumentList());
         }
         return new Number(0);
     }

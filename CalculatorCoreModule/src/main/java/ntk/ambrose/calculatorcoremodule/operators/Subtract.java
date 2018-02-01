@@ -6,6 +6,7 @@ import ntk.ambrose.calculatorcoremodule.ExprComponentType;
 import ntk.ambrose.calculatorcoremodule.Expression;
 import ntk.ambrose.calculatorcoremodule.ExpressionComponent;
 import ntk.ambrose.calculatorcoremodule.MessageType;
+import ntk.ambrose.calculatorcoremodule.operands.Null;
 import ntk.ambrose.calculatorcoremodule.operands.Number;
 
 public class Subtract extends ExpressionComponent{
@@ -27,7 +28,6 @@ public class Subtract extends ExpressionComponent{
             if (!isInStr) {
                 if (chExpr[i] == '-') {
                     expression.getExpr().put(i, new Subtract());
-                    ErrorHandle.getInstance().setMessage(MessageType.Info, "Subtract operator");
                 }
             }
         }
@@ -35,7 +35,7 @@ public class Subtract extends ExpressionComponent{
 
     @Override
     public ExpressionComponent process() {
-        ExpressionComponent result=null;
+        ExpressionComponent result=new Null();
         ExpressionComponent paraA=args.pop();
         ExpressionComponent paraB=args.pop();
         if(paraA.getComponentType()==ExprComponentType.Number&&paraB.getComponentType()==ExprComponentType.Number){
@@ -43,7 +43,7 @@ public class Subtract extends ExpressionComponent{
         }
         else{
             ErrorHandle.getInstance().setErrorFlag(true);
-            ErrorHandle.getInstance().setMessage(MessageType.Error,"Args have incorrect type");
+            ErrorHandle.getInstance().setMessage(MessageType.Error,locale.incorrectArgument());
         }
         return result;
     }

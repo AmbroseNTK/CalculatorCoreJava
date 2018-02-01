@@ -11,7 +11,6 @@ public class And extends ExpressionComponent {
     public And(){
         componentType= ExprComponentType.Function;
         priority=0;
-        identify="and";
     }
     @Override
     public void parse(Expression expression) {
@@ -27,13 +26,13 @@ public class And extends ExpressionComponent {
                     result = result && (Boolean) args.pop().getValue();
                 else {
                     ErrorHandle.getInstance().setErrorFlag(true);
-                    ErrorHandle.getInstance().setMessage(MessageType.Error, "And: Incorrect arguments");
+                    ErrorHandle.getInstance().setMessage(MessageType.Error, getClass().getName()+": "+locale.incorrectArgumentType());
                     break;
                 }
             }
         } else {
             ErrorHandle.getInstance().setErrorFlag(true);
-            ErrorHandle.getInstance().setMessage(MessageType.Error, "And: Missing some argument");
+            ErrorHandle.getInstance().setMessage(MessageType.Error, getClass().getName()+": "+locale.incorrectArgumentList());
         }
         return result == true ? new True() : new False();
     }
