@@ -28,7 +28,6 @@ public class Division extends ExpressionComponent {
             if (!isInStr) {
                 if (chExpr[i] == '/') {
                     expression.getExpr().put(i, new Division());
-                    ErrorHandle.getInstance().setMessage(MessageType.Info, "Division operator");
                 }
             }
         }

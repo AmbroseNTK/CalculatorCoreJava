@@ -11,6 +11,7 @@ public class Equal extends ExpressionComponent {
     public Equal() {
         componentType = ExprComponentType.Function;
         priority=1;
+        identify =locale.getIdentify(getClass().getSimpleName());
     }
 
     @Override
@@ -34,12 +35,12 @@ public class Equal extends ExpressionComponent {
                     return new True();
             } else {
                 ErrorHandle.getInstance().setErrorFlag(true);
-                ErrorHandle.getInstance().setMessage(MessageType.Error, getClass().getName()+": "+locale.incorrectArgumentType());
+                ErrorHandle.getInstance().setMessage(MessageType.Error, getClass().getSimpleName()+": "+locale.incorrectArgumentType());
             }
 
         } else {
             ErrorHandle.getInstance().setErrorFlag(true);
-            ErrorHandle.getInstance().setMessage(MessageType.Error, getClass().getName()+": "+locale.incorrectArgumentList());
+            ErrorHandle.getInstance().setMessage(MessageType.Error, getClass().getSimpleName()+": "+locale.incorrectArgumentList());
         }
         return new False();
     }

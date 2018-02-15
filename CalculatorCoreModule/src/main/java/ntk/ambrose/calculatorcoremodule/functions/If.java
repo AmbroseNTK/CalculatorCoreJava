@@ -14,6 +14,7 @@ public class If extends ExpressionComponent {
         componentType= ExprComponentType.Function;
         priority=0;
         identify="if";
+        identify =locale.getIdentify(getClass().getSimpleName());
     }
     @Override
     public void parse(Expression expression) {

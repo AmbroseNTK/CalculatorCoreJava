@@ -7,6 +7,9 @@ public abstract class Locale {
     public Locale(){
         identifyList=new HashMap<>();
         createIdentify(identifyList);
+
+        document = new HashMap<>();
+        createDocument(document);
     }
     public abstract String missingOperand();
     public abstract String incorrectArgument();
@@ -26,10 +29,18 @@ public abstract class Locale {
     public abstract String failExpression();
 
     public abstract void createIdentify(HashMap<String,String> identifyList);
+    public abstract void createDocument(HashMap<String,String> document);
+
     public HashMap<String,String> identifyList;
+    public HashMap<String,String> document;
     public String getIdentify(String funcName) {
         if(identifyList.containsKey(funcName))
             return identifyList.get(funcName);
+        return "";
+    }
+    public String getDocument(String funcName){
+        if(document.containsKey(funcName))
+            return document.get(funcName);
         return "";
     }
 }

@@ -9,6 +9,7 @@ public class Null extends ExpressionComponent {
     public Null(){
         componentType= ExprComponentType.Null;
         priority=0;
+        identify =locale.getIdentify(getClass().getSimpleName());
     }
     @Override
     public void parse(Expression expression) {

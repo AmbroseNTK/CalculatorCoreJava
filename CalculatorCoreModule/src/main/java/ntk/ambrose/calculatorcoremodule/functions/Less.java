@@ -11,6 +11,7 @@ public class Less extends ExpressionComponent {
     public Less(){
         componentType= ExprComponentType.Function;
         priority=1;
+        identify =locale.getIdentify(getClass().getSimpleName());
     }
     @Override
     public void parse(Expression expression) {
@@ -30,12 +31,12 @@ public class Less extends ExpressionComponent {
 
             } else {
                 ErrorHandle.getInstance().setErrorFlag(true);
-                ErrorHandle.getInstance().setMessage(MessageType.Error, getClass().getName()+": "+locale.incorrectArgument());
+                ErrorHandle.getInstance().setMessage(MessageType.Error, getClass().getSimpleName()+": "+locale.incorrectArgument());
             }
 
         } else {
             ErrorHandle.getInstance().setErrorFlag(true);
-            ErrorHandle.getInstance().setMessage(MessageType.Error, getClass().getName()+": "+locale.incorrectArgumentList());
+            ErrorHandle.getInstance().setMessage(MessageType.Error, getClass().getSimpleName()+": "+locale.incorrectArgumentList());
         }
         return new False();
     }

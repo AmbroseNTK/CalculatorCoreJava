@@ -11,6 +11,7 @@ public class Negative extends ExpressionComponent {
     public Negative(){
         componentType= ExprComponentType.Function;
         priority=0;
+        identify =locale.getIdentify(getClass().getSimpleName());
     }
     @Override
     public void parse(Expression expression) {
@@ -25,7 +26,7 @@ public class Negative extends ExpressionComponent {
         }
         else{
             ErrorHandle.getInstance().setErrorFlag(true);
-            ErrorHandle.getInstance().setMessage(MessageType.Error, getClass().getName()+": "+locale.incorrectArgumentList());
+            ErrorHandle.getInstance().setMessage(MessageType.Error, getClass().getSimpleName()+": "+locale.incorrectArgumentList());
         }
         return new Number(0);
     }

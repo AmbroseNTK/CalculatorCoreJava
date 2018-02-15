@@ -20,7 +20,7 @@ public class Number extends ExpressionComponent {
         try {
             value = new Double(strNum);
         } catch (Exception e) {
-            ErrorHandle.getInstance().setMessage(MessageType.Error, getClass().getName()+": "+locale.operandNumberError()+": "+strNum);
+            ErrorHandle.getInstance().setMessage(MessageType.Error, getClass().getSimpleName()+": "+locale.operandNumberError()+": "+strNum);
         }
     }
 

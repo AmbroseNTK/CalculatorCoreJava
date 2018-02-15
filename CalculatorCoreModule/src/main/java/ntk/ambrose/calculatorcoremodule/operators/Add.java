@@ -54,7 +54,7 @@ public class Add extends ExpressionComponent {
         }
         else{
             ErrorHandle.getInstance().setErrorFlag(true);
-            ErrorHandle.getInstance().setMessage(MessageType.Error,getClass().getName()+": "+locale.operatorAddError()+" between "+paraA.toString()+" and "+paraB.toString());
+            ErrorHandle.getInstance().setMessage(MessageType.Error,getClass().getSimpleName()+": "+locale.operatorAddError()+" between "+paraA.toString()+" and "+paraB.toString());
         }
 
         return result;

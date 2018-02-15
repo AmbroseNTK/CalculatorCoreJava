@@ -11,6 +11,7 @@ public class And extends ExpressionComponent {
     public And(){
         componentType= ExprComponentType.Function;
         priority=0;
+        identify =locale.getIdentify(getClass().getSimpleName());
     }
     @Override
     public void parse(Expression expression) {
@@ -26,13 +27,13 @@ public class And extends ExpressionComponent {
                     result = result && (Boolean) args.pop().getValue();
                 else {
                     ErrorHandle.getInstance().setErrorFlag(true);
-                    ErrorHandle.getInstance().setMessage(MessageType.Error, getClass().getName()+": "+locale.incorrectArgumentType());
+                    ErrorHandle.getInstance().setMessage(MessageType.Error, getClass().getSimpleName()+": "+locale.incorrectArgumentType());
                     break;
                 }
             }
         } else {
             ErrorHandle.getInstance().setErrorFlag(true);
-            ErrorHandle.getInstance().setMessage(MessageType.Error, getClass().getName()+": "+locale.incorrectArgumentList());
+            ErrorHandle.getInstance().setMessage(MessageType.Error, getClass().getSimpleName()+": "+locale.incorrectArgumentList());
         }
         return result == true ? new True() : new False();
     }

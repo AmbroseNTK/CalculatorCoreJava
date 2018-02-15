@@ -5,28 +5,38 @@ import ntk.ambrose.calculatorcoremodule.ExprComponentType;
 import ntk.ambrose.calculatorcoremodule.Expression;
 import ntk.ambrose.calculatorcoremodule.ExpressionComponent;
 import ntk.ambrose.calculatorcoremodule.MessageType;
+import ntk.ambrose.calculatorcoremodule.operands.Null;
 import ntk.ambrose.calculatorcoremodule.operands.Number;
 
+/**
+ * Created by ambrose on 14/02/2018.
+ */
 
-public class PI extends ExpressionComponent {
-    public PI(){
-        componentType= ExprComponentType.Function;
-        priority=0;
+public class Tangent extends ExpressionComponent {
+    public Tangent(){
+        componentType = ExprComponentType.Function;
+        priority=1;
         identify =locale.getIdentify(getClass().getSimpleName());
     }
     @Override
     public void parse(Expression expression) {
-        parseFunction(expression,new PI());
+        parseFunction(expression,new Tangent());
     }
 
     @Override
     public ExpressionComponent process() {
-        if(args.size()==0)
-            return new Number(3.14159265359);
-        else{
+        if(args.size()==1){
+            if(args.peek().getComponentType()==ExprComponentType.Number){
+                return new Number(Math.tan(((double) (args.pop().getValue()))));
+            }
+            ErrorHandle.getInstance().setErrorFlag(true);
+            ErrorHandle.getInstance().setMessage(MessageType.Error, getClass().getSimpleName()+": "+locale.incorrectArgumentType()+": "+args.peek());
+        }
+        else
+        {
             ErrorHandle.getInstance().setErrorFlag(true);
             ErrorHandle.getInstance().setMessage(MessageType.Error, getClass().getSimpleName()+": "+locale.incorrectArgumentList());
         }
-        return new Number(0);
+        return new Null();
     }
 }

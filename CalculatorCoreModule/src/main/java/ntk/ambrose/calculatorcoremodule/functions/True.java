@@ -10,6 +10,7 @@ public class True extends ExpressionComponent {
         componentType= ExprComponentType.Boolean;
         value=true;
         priority=0;
+        identify =locale.getIdentify(getClass().getSimpleName());
     }
     @Override
     public void parse(Expression expression) {

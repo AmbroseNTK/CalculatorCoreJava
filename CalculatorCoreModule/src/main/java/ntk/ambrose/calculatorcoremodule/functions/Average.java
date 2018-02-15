@@ -12,6 +12,7 @@ public class Average extends ExpressionComponent {
     public Average(){
         componentType= ExprComponentType.Function;
         priority=0;
+        identify =locale.getIdentify(getClass().getSimpleName());
     }
     @Override
     public void parse(Expression expression) {
@@ -29,7 +30,7 @@ public class Average extends ExpressionComponent {
                 }
                 else{
                     ErrorHandle.getInstance().setErrorFlag(true);
-                    ErrorHandle.getInstance().setMessage(MessageType.Error, getClass().getName()+": "+locale.incorrectArgumentType()+": "+args.peek().getValue().toString());
+                    ErrorHandle.getInstance().setMessage(MessageType.Error, getClass().getSimpleName()+": "+locale.incorrectArgumentType()+": "+args.peek().getValue().toString());
                     break;
                 }
             }

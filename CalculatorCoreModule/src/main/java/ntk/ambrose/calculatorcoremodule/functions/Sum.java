@@ -13,6 +13,7 @@ public class Sum extends ExpressionComponent {
     public Sum() {
         componentType = ExprComponentType.Function;
         priority = 0;
+        identify =locale.getIdentify(getClass().getSimpleName());
     }
     @Override
     public void parse(Expression expression) {
@@ -29,7 +30,7 @@ public class Sum extends ExpressionComponent {
             }
             else{
                 ErrorHandle.getInstance().setErrorFlag(true);
-                ErrorHandle.getInstance().setMessage(MessageType.Error, getClass().getName()+": "+locale.incorrectArgumentType()+": "+current);
+                ErrorHandle.getInstance().setMessage(MessageType.Error, getClass().getSimpleName()+": "+locale.incorrectArgumentType()+": "+current);
             }
         }
         return new Number(result);

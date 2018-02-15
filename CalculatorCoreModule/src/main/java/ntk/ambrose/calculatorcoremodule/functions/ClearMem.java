@@ -11,6 +11,7 @@ public class ClearMem extends ExpressionComponent {
     public ClearMem(){
         componentType= ExprComponentType.Function;
         priority=0;
+        identify =locale.getIdentify(getClass().getSimpleName());
     }
     @Override
     public void parse(Expression expression) {

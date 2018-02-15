@@ -13,6 +13,7 @@ public class SetVar extends ExpressionComponent {
     public SetVar(){
         componentType= ExprComponentType.Function;
         priority=1;
+        identify =locale.getIdentify(getClass().getSimpleName());
     }
     @Override
     public void parse(Expression expression) {
@@ -28,12 +29,12 @@ public class SetVar extends ExpressionComponent {
             }
             else{
                 ErrorHandle.getInstance().setErrorFlag(true);
-                ErrorHandle.getInstance().setMessage(MessageType.Error, getClass().getName()+": "+locale.incorrectArgumentType());
+                ErrorHandle.getInstance().setMessage(MessageType.Error, getClass().getSimpleName()+": "+locale.incorrectArgumentType());
             }
         }
         else{
             ErrorHandle.getInstance().setErrorFlag(true);
-            ErrorHandle.getInstance().setMessage(MessageType.Error, getClass().getName()+": "+locale.incorrectArgumentList());
+            ErrorHandle.getInstance().setMessage(MessageType.Error, getClass().getSimpleName()+": "+locale.incorrectArgumentList());
         }
         return new Null();
     }

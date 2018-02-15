@@ -42,7 +42,7 @@ public abstract class ExpressionComponent {
         this.args = args;
     }
     public void parseFunction(Expression expression,ExpressionComponent component) {
-        identify = locale.getIdentify(getClass().getName());
+        identify = locale.getIdentify(getClass().getSimpleName());
         boolean isInStr = false;
         int start = 0;
         char[] chExpr = expression.getRawExpression().toCharArray();

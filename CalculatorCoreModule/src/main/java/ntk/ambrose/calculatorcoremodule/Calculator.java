@@ -14,6 +14,7 @@ public class Calculator {
     private TreeMap<Integer,Expression> expressions;
     private int numOfExpr;
     private ArrayList<ExpressionComponent> parser;
+    private Inspector inspector;
 
     public Calculator(){
         init();
@@ -22,6 +23,7 @@ public class Calculator {
 
     }
     private void init(){
+        inspector = new Inspector();
         MemoryZone.getInstance().clearData();
         ExpressionComponent.setLocale(new LocaleEn());
         numOfExpr=0;
@@ -53,8 +55,24 @@ public class Calculator {
         parser.add(new SetVar());
         parser.add(new Body());
         parser.add(new ClearMem());
+        parser.add(new Sine());
+        parser.add(new Cosine());
+        parser.add(new Tangent());
+        parser.add(new ArcSine());
+        parser.add(new ArcCosine());
+        parser.add(new ArcTangent());
+        parser.add(new Logarithm());
+        parser.add(new Max());
+        parser.add(new Min());
+        parser.add(new ToNumber());
+        parser.add(new ToString());
+        parser.add(new SubString());
+        parser.add(new Pow());
         extension(parser);
 
+    }
+    public Inspector getInspector(){
+        return inspector;
     }
     public void addExpression(int id, String rawExpression){
         expressions.put(id,new Expression(rawExpression));
@@ -71,12 +89,22 @@ public class Calculator {
             for (ExpressionComponent component : parser) {
                 component.parse(expression);
             }
+
             expression.toPostfix();
             result = expression.calculate();
             ErrorHandle.getInstance().setMessage(MessageType.Info, "Result = " + (result == null ? "Unknow" : result.toString()));
 
         }
         return result;
+    }
+
+    public String inspect(String exprText, int target){
+        Expression temp=new Expression(exprText);
+        for(ExpressionComponent component:parser){
+            component.parse(temp);
+        }
+        inspector.setExpression(temp);
+        return inspector.inspect(target);
     }
 
 }

@@ -14,6 +14,7 @@ public class CreateVar extends ExpressionComponent {
     public CreateVar(){
         componentType= ExprComponentType.Function;
         priority=1;
+        identify =locale.getIdentify(getClass().getSimpleName());
     }
     @Override
     public void parse(Expression expression) {
@@ -29,7 +30,7 @@ public class CreateVar extends ExpressionComponent {
             }
             else{
                 ErrorHandle.getInstance().setErrorFlag(true);
-                ErrorHandle.getInstance().setMessage(MessageType.Error, getClass().getName()+": "+locale.incorrectArgument());
+                ErrorHandle.getInstance().setMessage(MessageType.Error, getClass().getSimpleName()+": "+locale.incorrectArgument());
             }
         }
         else if(size ==2){
@@ -39,7 +40,7 @@ public class CreateVar extends ExpressionComponent {
             }
             else{
                 ErrorHandle.getInstance().setErrorFlag(true);
-                ErrorHandle.getInstance().setMessage(MessageType.Error, getClass().getName()+": "+locale.incorrectArgumentType());
+                ErrorHandle.getInstance().setMessage(MessageType.Error, getClass().getSimpleName()+": "+locale.incorrectArgumentType());
             }
         }
         else{
